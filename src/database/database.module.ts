@@ -13,7 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: configService.get('DATABASE_USER'),
         password: configService.get('DATABASE_PASSWORD'),
         port: +configService.get('DATABASE_PORT'),
-        entities: ['dist/**/*.entity.{ts.js}'],
+        entities: ['dist/**/*.entity.{ts,js}'],
         synchronize: true,
       }),
       inject: [ConfigService],
