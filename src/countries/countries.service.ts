@@ -50,12 +50,46 @@ export class CountriesService {
     }
   }
 
-  findAll() {
-    return `This action returns all countries`;
+  async findAll() {
+    try {
+      const query = `SELECT * FROM countries`;
+      return await this.entityManager.query(query);
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} country`;
+  async findAllORM() {
+    try {
+      const countries = await this.countryRepository.find();
+
+      return countries;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async findOne(id: number) {
+    try {
+      const query = `SELECT name FROM countries where id = ${id}`;
+      return await this.entityManager.query(query);
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async findOneORM(id: number) {
+    try {
+      const country = await this.countryRepository.findBy({ id });
+
+      return country;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
   }
 
   async update(id: number, updateCountryDto: UpdateCountryDto) {

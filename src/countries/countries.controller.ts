@@ -33,9 +33,19 @@ export class CountriesController {
     return this.countriesService.findAll();
   }
 
+  @Get('orm')
+  findAllORM() {
+    return this.countriesService.findAllORM();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.countriesService.findOne(+id);
+  }
+
+  @Get(':id/orm')
+  findOneORM(@Param('id') id: string) {
+    return this.countriesService.findOneORM(+id);
   }
 
   @Patch(':id')
