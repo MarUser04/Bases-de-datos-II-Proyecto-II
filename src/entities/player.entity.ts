@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Country } from './country.entity';
 import { Session } from './session.entity';
+import { PlayerCoin } from './player-coin.entity';
 
 @Entity({ name: 'players' })
 export class Player {
@@ -27,4 +28,7 @@ export class Player {
 
   @OneToMany(() => Session, (session) => session.player)
   public session: Session[];
+
+  @OneToMany(() => PlayerCoin, (playerCoin) => playerCoin.player)
+  public players: Player[];
 }
