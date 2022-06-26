@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ItemCoin } from './item-coin.entity';
 
 @Entity({ name: 'items' })
 export class Item {
@@ -10,4 +11,7 @@ export class Item {
 
   @Column({ type: 'integer' })
   public level: number;
+
+  @OneToMany(() => ItemCoin, (itemCoin: ItemCoin) => itemCoin.id_item)
+  public itemCoin: ItemCoin[];
 }
