@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -18,9 +19,11 @@ export class PlayerCoin {
   public qty: number;
 
   @ManyToOne(() => Coin, (coin) => coin.coins)
+  @JoinColumn({ name: 'id_coin', referencedColumnName: 'id' })
   public coin: Coin;
 
   @ManyToOne(() => Player, (player) => player.players)
+  @JoinColumn({ name: 'id_player', referencedColumnName: 'id' })
   public player: Player;
 
   @OneToMany(() => Purchase, (purchase) => purchase.playerCoin)

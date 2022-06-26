@@ -4,6 +4,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  JoinColumn
 } from 'typeorm';
 import { Coin } from './coin.entity';
 import { Item } from './item.entity';
@@ -18,9 +19,11 @@ export class ItemCoin {
   public price: number;
 
   @ManyToOne(() => Item, (item: Item) => item.itemCoin)
+  @JoinColumn({ name: 'id_item', referencedColumnName: 'id' })
   public id_item: Item;
 
   @ManyToOne(() => Coin, (coin: Coin) => coin.itemCoin)
+  @JoinColumn({ name: 'id_coin', referencedColumnName: 'id' })
   public id_coin: Coin;
 
   @OneToMany(() => Purchase, (purchase) => purchase.itemCoin)

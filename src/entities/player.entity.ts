@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -24,6 +25,7 @@ export class Player {
   public gender: string;
 
   @ManyToOne(() => Country, (country) => country.players)
+  @JoinColumn({ name: 'id_country', referencedColumnName: 'id' })
   public country: Country;
 
   @OneToMany(() => Session, (session) => session.player)

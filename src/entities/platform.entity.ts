@@ -4,6 +4,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  JoinColumn
 } from 'typeorm';
 import { OperatingSystem } from './operating-system.entity';
 import { Session } from './session.entity';
@@ -21,6 +22,7 @@ export class Platform {
     () => OperatingSystem,
     (operatingSystem: OperatingSystem) => operatingSystem.platform,
   )
+  @JoinColumn({ name: 'id_operating_system', referencedColumnName: 'id' })
   public operatingSystem: OperatingSystem;
 
   @OneToMany(() => Session, (session) => session.platform)

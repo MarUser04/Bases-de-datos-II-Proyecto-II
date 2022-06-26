@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import { Platform } from './platform.entity';
 import { Player } from './player.entity';
 
@@ -14,8 +14,10 @@ export class Session {
   public session_end: Date;
 
   @ManyToOne(() => Player, (player: Player) => player.session)
+  @JoinColumn({ name: 'id_player', referencedColumnName: 'id' })
   public player: Player;
 
   @ManyToOne(() => Platform, (platform: Platform) => platform.session)
+  @JoinColumn({ name: 'id_platform', referencedColumnName: 'id' })
   public platform: Platform;
 }
