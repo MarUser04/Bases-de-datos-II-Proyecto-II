@@ -10,5 +10,5 @@ export class Country {
   public name: string;
 
   @OneToMany(() => Player, (player) => player.country)
-  players: Player[];
+  public players: Player[];
 }

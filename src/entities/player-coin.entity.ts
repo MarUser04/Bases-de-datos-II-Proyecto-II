@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Coin } from './coin.entity';
 import { Player } from './player.entity';
+import { Purchase } from './purchase.entity';
 
 @Entity({ name: 'players_coins' })
 export class PlayerCoin {
@@ -15,4 +22,7 @@ export class PlayerCoin {
 
   @ManyToOne(() => Player, (player) => player.players)
   public player: Player;
+
+  @OneToMany(() => Purchase, (purchase) => purchase.playerCoin)
+  public purchases: Purchase[];
 }

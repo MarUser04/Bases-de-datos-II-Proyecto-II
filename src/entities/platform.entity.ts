@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { OperatingSystem } from './operating-system.entity';
 import { Session } from './session.entity';
+import { Purchase } from './purchase.entity';
 
 @Entity({ name: 'platforms' })
 export class Platform {
@@ -24,4 +25,7 @@ export class Platform {
 
   @OneToMany(() => Session, (session) => session.platform)
   public session: Session[];
+
+  @OneToMany(() => Purchase, (purchase) => purchase.platform)
+  public purchases: Purchase[];
 }
