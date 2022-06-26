@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Country } from './country.entity';
+import { PlayerCoin } from './player-coin.entity';
 
 @Entity({ name: 'players' })
 export class Player {
@@ -17,4 +24,7 @@ export class Player {
 
   @ManyToOne(() => Country, (country) => country.players)
   public country: Country;
+
+  @OneToMany(() => PlayerCoin, (playerCoin) => playerCoin.player)
+  players: Player[];
 }
