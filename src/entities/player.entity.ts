@@ -10,11 +10,11 @@ export class Player {
   public name: string;
 
   @Column({ type: 'date' })
-  birthdate: Date;
+  public birthdate: Date;
 
   @Column({ type: 'text' })
-  gender: string;
+  public gender: string;
 
   @ManyToOne(() => Country, (country) => country.players)
-  country: Country;
+  public country: Country;
 }
