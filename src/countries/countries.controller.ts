@@ -39,8 +39,19 @@ export class CountriesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCountryDto: UpdateCountryDto) {
+  update(
+    @Param('id') id: string,
+    @Body(ValidationPipe) updateCountryDto: UpdateCountryDto,
+  ) {
     return this.countriesService.update(+id, updateCountryDto);
+  }
+
+  @Patch(':id/orm')
+  updateORM(
+    @Param('id') id: string,
+    @Body(ValidationPipe) updateCountryDto: UpdateCountryDto,
+  ) {
+    return this.countriesService.updateORM(+id, updateCountryDto);
   }
 
   @Delete(':id')

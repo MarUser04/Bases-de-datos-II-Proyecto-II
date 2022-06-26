@@ -58,8 +58,32 @@ export class CountriesService {
     return `This action returns a #${id} country`;
   }
 
-  update(id: number, updateCountryDto: UpdateCountryDto) {
-    return `This action updates a #${id} country`;
+  async update(id: number, updateCountryDto: UpdateCountryDto) {
+    const { name } = updateCountryDto;
+
+    try {
+      const query = `UPDATE countries SET name = '${name}' WHERE id = ${id}`;
+
+      await this.entityManager.query(query);
+
+      return updateCountryDto;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async updateORM(id: number, updateCountryDto: UpdateCountryDto) {
+    const { name } = updateCountryDto;
+
+    try {
+      const country = await this.countryRepository.update({ id }, { name });
+
+      return country;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
   }
 
   remove(id: number) {
