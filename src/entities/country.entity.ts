@@ -6,7 +6,7 @@ export class Country {
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', unique: true })
   public name: string;
 
   @OneToMany(() => Player, (player) => player.country)

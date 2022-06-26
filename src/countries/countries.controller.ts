@@ -6,18 +6,26 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CountriesService } from './countries.service';
 import { CreateCountryDto } from './dto/create-country.dto';
 import { UpdateCountryDto } from './dto/update-country.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('countries')
+@ApiTags('Countries')
 export class CountriesController {
   constructor(private readonly countriesService: CountriesService) {}
 
   @Post()
-  create(@Body() createCountryDto: CreateCountryDto) {
+  async create(@Body(ValidationPipe) createCountryDto: CreateCountryDto) {
     return this.countriesService.create(createCountryDto);
+  }
+
+  @Post('orm')
+  async createORM(@Body(ValidationPipe) createCountryDto: CreateCountryDto) {
+    return this.countriesService.createORM(createCountryDto);
   }
 
   @Get()

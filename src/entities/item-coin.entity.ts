@@ -4,7 +4,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import { Coin } from './coin.entity';
 import { Item } from './item.entity';

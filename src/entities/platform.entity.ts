@@ -4,7 +4,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import { OperatingSystem } from './operating-system.entity';
 import { Session } from './session.entity';

@@ -1,4 +1,10 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { ItemCoin } from './item-coin.entity';
 import { PlayerCoin } from './player-coin.entity';
