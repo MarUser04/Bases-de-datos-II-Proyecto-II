@@ -82,8 +82,59 @@ export class PlayersService {
     return `This action returns a #${id} player`;
   }
 
-  update(id: number, updatePlayerDto: UpdatePlayerDto) {
-    return `This action updates a #${id} player`;
+  async update(id: number, updatePlayerDto: UpdatePlayerDto) {
+    const { name, birthdate, country, gender } = updatePlayerDto;
+
+    try {
+      const query = `
+        UPDATE players SET
+        name = '${name}',
+        birthdate = '${birthdate}',
+        id_country = '${country}',
+        gender = '${gender}' 
+        WHERE id = ${id};
+      `;
+
+      await this.entityManager.query(query);
+
+      return updatePlayerDto;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async updateORM(id: number, updatePlayerDto: UpdatePlayerDto) {
+    const { name, birthdate, country: countryId, gender } = updatePlayerDto;
+
+    let country;
+    try {
+      country = await this.countryRepository.findOneBy({ id: countryId });
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+
+    if (!country) {
+      throw new NotFoundException();
+    }
+
+    try {
+      const player = await this.playerRepository.update(
+        { id },
+        {
+          name,
+          birthdate,
+          gender,
+          country,
+        },
+      );
+
+      return player;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
   }
 
   remove(id: number) {

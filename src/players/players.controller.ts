@@ -45,6 +45,11 @@ export class PlayersController {
     return this.playersService.update(+id, updatePlayerDto);
   }
 
+  @Patch(':id/orm')
+  updateORM(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
+    return this.playersService.updateORM(+id, updatePlayerDto);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.playersService.remove(+id);
