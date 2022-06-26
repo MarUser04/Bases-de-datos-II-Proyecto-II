@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Country } from './country.entity';
+import { Session } from './session.entity';
 
 @Entity({ name: 'players' })
 export class Player {
@@ -17,4 +24,7 @@ export class Player {
 
   @ManyToOne(() => Country, (country) => country.players)
   public country: Country;
+
+  @OneToMany(() => Session, (session) => session.player)
+  public session: Session[];
 }
