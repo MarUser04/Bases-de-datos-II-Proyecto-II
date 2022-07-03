@@ -141,6 +141,38 @@ export class PlayersService {
     return `This action removes a #${id} player`;
   }
 
+  async groupByCountries() {
+    try {
+      const query = `
+        SELECT c.name as country, COUNT(*) as total
+        FROM players p
+        INNER JOIN countries c ON c.id = p.id_country
+        GROUP BY country
+        ORDER BY total DESC
+      `;
+      return await this.entityManager.query(query);
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async groupByCountriesORM() {
+    try {
+      const players = await this.playerRepository
+        .createQueryBuilder('players')
+        .select('countries.name', 'country')
+        .addSelect('COUNT(*)', 'total')
+        .innerJoin('players.id_country', 'countries')
+        .groupBy('country');
+
+      return players;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
   async groupByGender() {
     try {
       const query = `

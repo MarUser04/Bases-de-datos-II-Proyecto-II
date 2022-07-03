@@ -35,6 +35,16 @@ export class PlayersController {
     return this.playersService.findAll();
   }
 
+  @Get('/countries')
+  groupByCountries() {
+    return this.playersService.groupByCountries();
+  }
+
+  @Get('/countries/orm')
+  groupByCountriesORM() {
+    return this.playersService.groupByCountriesORM();
+  }
+
   @Get('/gender')
   groupByGender() {
     return this.playersService.groupByGender();
