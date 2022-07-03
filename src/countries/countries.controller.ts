@@ -63,9 +63,4 @@ export class CountriesController {
   ) {
     return this.countriesService.updateORM(+id, updateCountryDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.countriesService.remove(+id);
-  }
 }

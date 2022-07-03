@@ -78,10 +78,6 @@ export class PlayersService {
     return `This action returns all players`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} player`;
-  }
-
   async update(id: number, updatePlayerDto: UpdatePlayerDto) {
     const { name, birthdate, country, gender } = updatePlayerDto;
 
@@ -135,10 +131,6 @@ export class PlayersService {
       this.logger.error(e?.message);
       throw new InternalServerErrorException();
     }
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} player`;
   }
 
   async groupByCountries() {
