@@ -140,4 +140,34 @@ export class PlayersService {
   remove(id: number) {
     return `This action removes a #${id} player`;
   }
+
+  async groupByGender() {
+    try {
+      const query = `
+        SELECT COUNT(*), gender
+        FROM players
+        GROUP BY gender
+      `;
+      return await this.entityManager.query(query);
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async groupByGenderORM() {
+    try {
+      const players = await this.playerRepository
+        .createQueryBuilder('players')
+        .select('COUNT(*)')
+        .addSelect('gender')
+        .groupBy('gender')
+        .getRawMany();
+
+      return players;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
+  }
 }

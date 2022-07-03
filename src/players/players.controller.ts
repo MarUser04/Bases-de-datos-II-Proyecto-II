@@ -35,6 +35,16 @@ export class PlayersController {
     return this.playersService.findAll();
   }
 
+  @Get('/gender')
+  groupByGender() {
+    return this.playersService.groupByGender();
+  }
+
+  @Get('/gender/orm')
+  groupByGenderORM() {
+    return this.playersService.groupByGenderORM();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.playersService.findOne(+id);
