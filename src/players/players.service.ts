@@ -163,8 +163,10 @@ export class PlayersService {
         .createQueryBuilder('players')
         .select('countries.name', 'country')
         .addSelect('COUNT(*)', 'total')
-        .innerJoin('players.id_country', 'countries')
-        .groupBy('country');
+        .innerJoin('players.country', 'countries')
+        .groupBy('country')
+        .orderBy('total', 'DESC')
+        .getRawMany();
 
       return players;
     } catch (e) {
