@@ -35,12 +35,17 @@ export class PlayersController {
     return this.playersService.findAll();
   }
 
-  @Get('/countries')
+  @Get('/orm')
+  findAllORM() {
+    return this.playersService.findAllORM();
+  }
+
+  @Get('/by-countries')
   groupByCountries() {
     return this.playersService.groupByCountries();
   }
 
-  @Get('/countries/orm')
+  @Get('/by-countries/orm')
   groupByCountriesORM() {
     return this.playersService.groupByCountriesORM();
   }
@@ -53,11 +58,6 @@ export class PlayersController {
   @Get('/gender/orm')
   groupByGenderORM() {
     return this.playersService.groupByGenderORM();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.playersService.findOne(+id);
   }
 
   @Patch(':id')

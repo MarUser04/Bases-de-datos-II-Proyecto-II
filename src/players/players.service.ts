@@ -74,12 +74,36 @@ export class PlayersService {
     }
   }
 
-  findAll() {
-    return `This action returns all players`;
+  async findAll() {
+    try {
+      const query = `
+        SELECT p.name as player, p.gender as gender, p.birthdate as birthdate, c.name as country
+        FROM players p
+        INNER JOIN countries c ON c.id = p.id_country
+      `;
+      return await this.entityManager.query(query);
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} player`;
+  async findAllORM() {
+    try {
+      const players = await this.playerRepository
+        .createQueryBuilder('players')
+        .select('players.name', 'player')
+        .addSelect('players.gender', 'gender')
+        .addSelect('players.birthdate', 'birthdate')
+        .addSelect('countries.name', 'country')
+        .innerJoin('players.country', 'countries')
+        .getRawMany();
+
+      return players;
+    } catch (e) {
+      this.logger.error(e?.message);
+      throw new InternalServerErrorException();
+    }
   }
 
   async update(id: number, updatePlayerDto: UpdatePlayerDto) {
