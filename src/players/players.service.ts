@@ -161,10 +161,6 @@ export class PlayersService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} player`;
-  }
-
   async groupByCountries() {
     try {
       const query = `

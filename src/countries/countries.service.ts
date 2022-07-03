@@ -119,8 +119,4 @@ export class CountriesService {
       throw new InternalServerErrorException();
     }
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} country`;
-  }
 }

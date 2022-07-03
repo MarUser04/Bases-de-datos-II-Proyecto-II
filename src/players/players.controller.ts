@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -68,10 +67,5 @@ export class PlayersController {
   @Patch(':id/orm')
   updateORM(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
     return this.playersService.updateORM(+id, updatePlayerDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.playersService.remove(+id);
   }
 }
