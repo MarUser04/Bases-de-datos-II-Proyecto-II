@@ -90,14 +90,9 @@ export class PlayersService {
 
   async findAllORM() {
     try {
-      const players = await this.playerRepository
-        .createQueryBuilder('players')
-        .select('players.name', 'player')
-        .addSelect('players.gender', 'gender')
-        .addSelect('players.birthdate', 'birthdate')
-        .addSelect('countries.name', 'country')
-        .innerJoin('players.country', 'countries')
-        .getRawMany();
+      const players = await this.playerRepository.find({
+        relations: ['country']
+      });
 
       return players;
     } catch (e) {
