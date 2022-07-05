@@ -91,7 +91,7 @@ export class PlayersService {
   async findAllORM() {
     try {
       const players = await this.playerRepository.find({
-        relations: ['country']
+        relations: ['country'],
       });
 
       return players;
@@ -174,16 +174,14 @@ export class PlayersService {
 
   async groupByCountriesORM() {
     try {
-      const players = await this.playerRepository
-        .createQueryBuilder('players')
-        .select('countries.name', 'country')
-        .addSelect('COUNT(*)', 'total')
-        .innerJoin('players.country', 'countries')
-        .groupBy('country')
-        .orderBy('total', 'DESC')
-        .getRawMany();
+      const countries = await this.countryRepository.find({
+        relations: ['players'],
+      });
 
-      return players;
+      return countries.map((country) => ({
+        ...country,
+        players: country.players.length,
+      }));
     } catch (e) {
       this.logger.error(e?.message);
       throw new InternalServerErrorException();
@@ -195,6 +193,7 @@ export class PlayersService {
       const query = `
         SELECT COUNT(*), gender
         FROM players
+        WHERE gender = 'Male'
         GROUP BY gender
       `;
       return await this.entityManager.query(query);
@@ -206,14 +205,11 @@ export class PlayersService {
 
   async groupByGenderORM() {
     try {
-      const players = await this.playerRepository
-        .createQueryBuilder('players')
-        .select('COUNT(*)')
-        .addSelect('gender')
-        .groupBy('gender')
-        .getRawMany();
+      const [, count] = await this.playerRepository.findAndCountBy({
+        gender: 'Male',
+      });
 
-      return players;
+      return [{ count, gender: 'Male' }];
     } catch (e) {
       this.logger.error(e?.message);
       throw new InternalServerErrorException();
